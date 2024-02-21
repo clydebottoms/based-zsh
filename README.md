@@ -11,9 +11,6 @@ echo 'ZDOTDIR=${XDG_CONFIG_HOME:-~/.config}/zsh' | sudo tee /etc/zshenv
 ZSH_CONFIG=~/.config/zsh
 mkdir -p $ZSH_CONFIG
 git clone --depth=1 --single-branch https://github.com/clydebottoms/based-zsh $ZSH_CONFIG
-# OR
-# curl -o $ZSH_CONFIG/.zshrc https://raw.githubusercontent.com/clydebottoms/based-zsh/main/.zshrc
-# wget -O $ZSH_CONFIG/.zshrc https://raw.githubusercontent.com/clydebottoms/based-zsh/main/.zshrc
 ```
 
 # Uninstall

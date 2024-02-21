@@ -1,0 +1,140 @@
+version = 0.01
+
+# zinit ice lucid wait'0' from"gh-r" as"program" atload'eval "$(zoxide init zsh)"'
+# zinit light ajeetdsouza/zoxide
+
+# zinit ice lucid wait'0' depth=1
+# zinit light joshskidmore/zsh-fzf-history-search
+
+# zinit ice lucid wait'0' depth=1
+# zinit light-mode for \
+# 	romkatv/powerlevel10k \
+# 	Aloxaf/fzf-tab \
+# 	zdharma-continuum/fast-syntax-highlighting \
+# 	zsh-users/zsh-autosuggestions \
+# 	jeffreytse/zsh-vi-mode \
+# 	romkatv/zsh-defer
+
+# zinit wait lucid atload"zicompinit; zicdreplay" blockf for zsh-users/zsh-completions
+
+[settings]
+plugins = [
+    "romkatv/powerlevel10k",
+    "Aloxaf/fzf-tab",
+    "zdharma/fast-syntax-highlighting",
+    "zsh-users/zsh-autosuggestions",
+    "jeffreytse/zsh-vi-mode",
+]
+path = [
+"$DATA/flatpak/exports/bin",
+"$DATA/cargo/bin",
+"$HOME/.local/bin",
+"$HOME/.bin",
+]
+env = """
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-~/.config}"
+CONFIG="$XDG_CONFIG_HOME"
+XDG_CACHE_HOME="${XDG_CACHE_HOME:-~/.local/cache}"
+CACHE="$XDG_CACHE_HOME"
+XDG_DATA_HOME="${XDG_DATA_HOME:-~/.local/share}"
+DATA="$XDG_DATA_HOME"
+XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
+LESSHISTFILE="/dev/null"
+NVM_DIR="$DATA/nvm"
+RUSTUP_HOME="$DATA/rustup"
+_JAVA_OPTIONS="-Djava.util.prefs.userRoot=$CONFIG/java"
+NUGET_PACKAGES="$CACHE/NuGetPackages"
+NODE_REPL_HISTORY="$DATA/node_repl_history"
+KDEHOME="$CONFIG/kde"
+XCURSOR_PATH="/usr/share/icons:$DATA/icons"
+GTK2_RC_FILES="$CONFIG/gtk-2.0/gtkrc"
+GRADLE_USER_HOME="$DATA/gradle"
+GOPATH="$DATA/go"
+GNUPGHOME="$DATA/gnupg"
+CARGO_HOME="$DATA/cargo"
+ROCM_PATH="/opt/rocm"
+HISTFILE="$HOME/.config/zsh/history"
+HISTSIZE="1000000000"
+SAVEHIST="1000000000"
+"""
+zstyle = """
+':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+':completion:*:*:*:default' menu yes select search
+':completion:*' completer _extensions _complete _approximate
+':completion:*' file-sort modification reverse
+':completion:*' special-dirs false
+':completion:*' use-cache on
+':completion:*' squeeze-slashes true
+':completion:*' group-name ''
+':completion:*:*:-command-:*:*' group-order alias builtins functions commands
+':completion:*:git-checkout:*' sort false
+':completion:*:descriptions' format '[%d]'
+':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+':fzf-tab:*' switch-group ',' '.'
+"""
+setopts = """
+autocd
+extendedglob
+share_history
+always_to_end
+no_case_glob
+hist_find_no_dups
+hist_ignore_dups
+hist_ignore_space
+hist_expire_dups_first
+hist_save_no_dups
+hist_verify
+hist_ignore_all_dups
+"""
+
+[simple]
+cat = "bat"
+r = "rm"
+clone = "git clone --depth=1 --single-branch"
+removeorphans = "paru -Rns $(paru -Qtdq)"
+
+[addflags]
+rg = "--hidden"
+grep = "--color=auto"
+wget = "--hsts-file=/dev/null"
+yarn = "--use-yarnrc $CONFIG/yarn/config"
+
+[alias.egrep]
+command = "grep -E"
+aliases = "egrep"
+
+[alias.zoxide]
+command = ["__zoxide_z", "cd"]
+aliases = ["z", "cd", "c"]
+
+[alias.eza]
+command = ["eza --octal-permissions --no-time -h -g --git", "exa --octal-permissions --no-time -h -g --git", "ls"]
+aliases = ["l", "ls"]
+
+[alias.eza-hidden]
+command = ["eza -a --octal-permissions --no-time -h -g --git", "exa -a --octal-permissions --no-time -h -g --git", "ls -a"]
+aliases = ["la", "lsa"]
+
+[alias.eza-long]
+command = ["eza -l --octal-permissions --no-time -h -g --git", "exa -l --octal-permissions --no-time -h -g --git", "ls -l"]
+aliases = ["ll", "lsl"]
+
+[alias.eza-tree]
+command = ["eza -T", "tree"]
+aliases = ["tree"]
+
+[alias.clear]
+command = "clear"
+aliases = ["c", "ear", "cls"]
+
+[alias.Hyprland]
+command = "Hyprland"
+aliases = ["h", "H", "hyprland"]
+
+[alias.aur]
+command = ["paru", "yay", "sudo pacman"]
+aliases = ["p", "y", "yay", "paru"]
+
+[alias.removeorphans]
+command = 'paru -Rns $(paru -Qtdq)'
+aliases = "removeorphans"

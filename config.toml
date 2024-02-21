@@ -1,23 +1,13 @@
 version = 0.01
 
-# zinit ice lucid wait'0' from"gh-r" as"program" atload'eval "$(zoxide init zsh)"'
-# zinit light ajeetdsouza/zoxide
-
-# zinit ice lucid wait'0' depth=1
-# zinit light joshskidmore/zsh-fzf-history-search
-
-# zinit ice lucid wait'0' depth=1
-# zinit light-mode for \
-# 	romkatv/powerlevel10k \
-# 	Aloxaf/fzf-tab \
-# 	zdharma-continuum/fast-syntax-highlighting \
-# 	zsh-users/zsh-autosuggestions \
-# 	jeffreytse/zsh-vi-mode \
-# 	romkatv/zsh-defer
-
-# zinit wait lucid atload"zicompinit; zicdreplay" blockf for zsh-users/zsh-completions
-
 [settings]
+preferred_editor_list = [
+    "helix",
+    "nvim",
+    "vim",
+    "micro",
+    "nano",
+]
 plugins = [
     "romkatv/powerlevel10k",
     "Aloxaf/fzf-tab",
@@ -42,6 +32,7 @@ XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
 LESSHISTFILE="/dev/null"
 NVM_DIR="$DATA/nvm"
 RUSTUP_HOME="$DATA/rustup"
+VISUAL="$EDITOR"
 _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$CONFIG/java"
 NUGET_PACKAGES="$CACHE/NuGetPackages"
 NODE_REPL_HISTORY="$DATA/node_repl_history"
@@ -92,6 +83,7 @@ cat = "bat"
 r = "rm"
 clone = "git clone --depth=1 --single-branch"
 removeorphans = "paru -Rns $(paru -Qtdq)"
+e = "$EDITOR"
 
 [addflags]
 rg = "--hidden"
@@ -102,10 +94,6 @@ yarn = "--use-yarnrc $CONFIG/yarn/config"
 [alias.egrep]
 command = "grep -E"
 aliases = "egrep"
-
-[alias.zoxide]
-command = ["__zoxide_z", "cd"]
-aliases = ["z", "cd", "c"]
 
 [alias.eza]
 command = ["eza --octal-permissions --no-time -h -g --git", "exa --octal-permissions --no-time -h -g --git", "ls"]

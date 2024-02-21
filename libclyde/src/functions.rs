@@ -1,4 +1,4 @@
-use which::{which_global};
+use which::which_global;
 use toml;
 use std::fs;
 use std::collections::HashMap;
@@ -11,6 +11,16 @@ pub fn is_executable(name: &str) -> bool {
 
 pub fn open_file(path: &str) -> String {
     fs::read_to_string(path).unwrap()
+}
+
+pub fn process_editor(editor: Vec<String>, mut zsh: String) -> String {
+    for e in editor {
+        if is_executable(&e) {
+            zsh.push_str(&format!("export EDITOR={}\n", e));
+            break;
+        }
+    }
+    zsh
 }
 
 // fix later

@@ -1,5 +1,5 @@
 use serde_derive::Deserialize;
-use std::collections::{HashMap};
+use std::collections::HashMap;
 mod functions;
 
 #[derive(Deserialize)]
@@ -19,6 +19,7 @@ struct Config {
 
 #[derive(Deserialize)]
 struct Settings {
+    preferred_editor_list: Vec<String>,
     plugins: Vec<String>,
     setopts: String,
     zstyle: String,
@@ -40,6 +41,7 @@ fn main() {
     let mut zsh = String::new();
 
     if let Some(settings) = config.settings {
+        zsh = functions::process_editor(settings.preferred_editor_list, zsh);
         zsh = functions::prefix_string("export ", settings.env, zsh);
         zsh = functions::process_path(settings.path, zsh);
         zsh = functions::prefix_string("setopt ", settings.setopts, zsh);

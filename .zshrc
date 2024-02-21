@@ -10,9 +10,13 @@ else
 	popd > /dev/null
 fi
 
-
-. "$ZSH_CONFIG/p10k.zsh"
-. "$CONFIG/user-dirs.dirs"
+safesource() {
+	if [ -f "$@" ]; then
+		. "$@"
+	fi
+}
+safesource "$ZSH_CONFIG/p10k.zsh"
+safesource "$XDG_CONFIG_HOME/user-dirs.dirs"
 
 fo() {
 	for annoyances in $(pgrep -f "$@"); do
@@ -52,6 +56,11 @@ zsh-defer source $pdir/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 source $pdir/zsh-fzf-history-search/zsh-fzf-history-search.plugin.zsh
 zsh-defer source $pdir/fzf-tab/fzf-tab.plugin.zsh
 zsh-defer source $pdir/zsh-completions/zsh-completions.plugin.zsh
+
+eval "$(zoxide init zsh)"
+
+alias z=__zoxide_z
+alias c=__zoxide_z
 
 autoload -Uz compinit; compinit -C
 (autoload -Uz compinit && compinit &)

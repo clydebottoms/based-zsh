@@ -23,13 +23,12 @@ pub fn process_editor(editor: Vec<String>, mut zsh: String) -> String {
     zsh
 }
 
-// fix later
 pub fn process_simple(simple: Option<toml::Value>, mut zsh: String) -> String {
     if let Some(simple) = simple {
         let simple = simple.as_table().unwrap();
         for (k, v) in simple {
-            if is_executable(k) {
-                if let Some(v_str) = v.as_str() {
+            if let Some(v_str) = v.as_str() {
+                if is_executable(v_str) || v_str.starts_with("$") {
                     zsh.push_str(&format!("alias {}='{}'\n", k, v_str));
                 }
             }
@@ -42,8 +41,8 @@ pub fn process_addflags(addflags: Option<toml::Value>, mut zsh: String) -> Strin
     if let Some(addflags) = addflags {
         let addflags = addflags.as_table().unwrap();
         for (k, v) in addflags {
-            if is_executable(k) {
-                if let Some(v_str) = v.as_str() {
+            if let Some(v_str) = v.as_str() {
+                if is_executable(k) {
                     zsh.push_str(&format!("alias {}='{} {}'\n", k, k, v_str));
                 }
             }
@@ -94,9 +93,8 @@ pub fn process_alias(alias: Option<HashMap<String, Alias>>, mut zsh: String) -> 
 }
 
 pub fn process_path(path: Vec<String>, mut zsh: String) -> String {
-    for p in path {
-        zsh.push_str(&format!("export PATH={}:$PATH\n", p));
-    }
+    let joined_path = path.join(":");
+    zsh.push_str(&format!("export PATH=\"{}:$PATH\"\n", joined_path));
     zsh
 }
 

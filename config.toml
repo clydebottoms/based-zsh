@@ -22,11 +22,11 @@ path = [
 "$HOME/.bin",
 ]
 env = """
-XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-~/.config}"
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 CONFIG="$XDG_CONFIG_HOME"
-XDG_CACHE_HOME="${XDG_CACHE_HOME:-~/.local/cache}"
+XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.local/cache}"
 CACHE="$XDG_CACHE_HOME"
-XDG_DATA_HOME="${XDG_DATA_HOME:-~/.local/share}"
+XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 DATA="$XDG_DATA_HOME"
 XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
 LESSHISTFILE="/dev/null"

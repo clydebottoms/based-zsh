@@ -1,5 +1,8 @@
 export ZSH_CONFIG="$HOME/.config/zsh"
-mkdir -p "$ZSH_CONFIG"
+
+if [ ! -d "$ZSH_CONFIG" ]; then
+	mkdir -p "$ZSH_CONFIG"
+fi
 
 binary="$ZSH_CONFIG/libclyde/target/release/libclyde"
 if [ -f "$binary" ]; then
@@ -26,25 +29,27 @@ fo() {
 
 alias fuckoff=fo
 
-clone() {
+shallowclone() {
 	if [ ! -d "$2" ]; then
-		git clone --depth=1 --single-branch "$@"
+		git shallowclone --depth=1 --single-branch "$@"
 	fi
 }
 
 pdir="$ZSH_CONFIG/test/"
 
-clone https://github.com/romkatv/zsh-defer.git $ZSH_CONFIG/test/zsh-defer
+shallowclone https://github.com/romkatv/zsh-defer.git $ZSH_CONFIG/test/zsh-defer
+
+# 0-1ms
 . $pdir/zsh-defer/zsh-defer.plugin.zsh
 
 pushd $pdir > /dev/null
-clone https://github.com/romkatv/powerlevel10k powerlevel10k
-clone https://github.com/Aloxaf/fzf-tab fzf-tab
-clone https://github.com/zdharma-continuum/fast-syntax-highlighting fast-syntax-highlighting
-clone https://github.com/zsh-users/zsh-autosuggestions zsh-autosuggestions
-clone https://github.com/jeffreytse/zsh-vi-mode zsh-vi-mode
-clone https://github.com/joshskidmore/zsh-fzf-history-search zsh-fzf-history-search
-clone https://github.com/zsh-users/zsh-completions zsh-completions
+shallowclone https://github.com/romkatv/powerlevel10k powerlevel10k
+shallowclone https://github.com/Aloxaf/fzf-tab fzf-tab
+shallowclone https://github.com/zdharma-continuum/fast-syntax-highlighting fast-syntax-highlighting
+shallowclone https://github.com/zsh-users/zsh-autosuggestions zsh-autosuggestions
+shallowclone https://github.com/jeffreytse/zsh-vi-mode zsh-vi-mode
+shallowclone https://github.com/joshskidmore/zsh-fzf-history-search zsh-fzf-history-search
+shallowclone https://github.com/zsh-users/zsh-completions zsh-completions
 popd > /dev/null
 
 source $pdir/powerlevel10k/powerlevel10k.zsh-theme
@@ -57,10 +62,12 @@ source $pdir/zsh-fzf-history-search/zsh-fzf-history-search.plugin.zsh
 zsh-defer source $pdir/fzf-tab/fzf-tab.plugin.zsh
 zsh-defer source $pdir/zsh-completions/zsh-completions.plugin.zsh
 
+# 1ms
 eval "$(zoxide init zsh)"
 
 alias z=__zoxide_z
-alias c=__zoxide_z
+alias cd=__zoxide_z
 
+6-7ms
 autoload -Uz compinit; compinit -C
 (autoload -Uz compinit && compinit &)

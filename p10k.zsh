@@ -23,8 +23,8 @@
   emulate -L zsh -o extended_glob
 
   # Unset all configuration options. This allows you to apply configuration changes without
-  # restarting zsh. Edit ~/.p10k.zsh and type `source ~/.p10k.zsh`.
-  unset -m '(POWERLEVEL9K_*|DEFAULT_USER)~POWERLEVEL9K_GITSTATUS_DIR'
+  # restarting zsh. Edit $HOME/.p10k.zsh and type `source $HOME/.p10k.zsh`.
+  unset -m '(POWERLEVEL9K_*|DEFAULT_USER)$HOMEPOWERLEVEL9K_GITSTATUS_DIR'
 
   # Zsh >= 5.1 is required.
   autoload -Uz is-at-least && is-at-least 5.1 || return
@@ -303,11 +303,11 @@
   # For example, given these settings:
   #
   #   typeset -g POWERLEVEL9K_DIR_CLASSES=(
-  #     '~/work(|/*)'  WORK     ''
-  #     '~(|/*)'       HOME     ''
+  #     '$HOME/work(|/*)'  WORK     ''
+  #     '$HOME(|/*)'       HOME     ''
   #     '*'            DEFAULT  '')
   #
-  # Whenever the current directory is ~/work or a subdirectory of ~/work, it gets styled with one
+  # Whenever the current directory is $HOME/work or a subdirectory of $HOME/work, it gets styled with one
   # of the following classes depending on its writability and existence: WORK, WORK_NOT_WRITABLE or
   # WORK_NON_EXISTENT.
   #
@@ -351,7 +351,7 @@
 
   # Formatter for Git status.
   #
-  # Example output: master wip ⇣42⇡42 *42 merge ~42 +42 !42 ?42.
+  # Example output: master wip ⇣42⇡42 *42 merge $HOME42 +42 !42 ?42.
   #
   # You can edit the function to customize how Git status looks.
   #
@@ -436,8 +436,8 @@
     (( VCS_STATUS_STASHES        )) && res+=" ${clean}*${VCS_STATUS_STASHES}"
     # 'merge' if the repo is in an unusual state.
     [[ -n $VCS_STATUS_ACTION     ]] && res+=" ${conflicted}${VCS_STATUS_ACTION}"
-    # ~42 if have merge conflicts.
-    (( VCS_STATUS_NUM_CONFLICTED )) && res+=" ${conflicted}~${VCS_STATUS_NUM_CONFLICTED}"
+    # $HOME42 if have merge conflicts.
+    (( VCS_STATUS_NUM_CONFLICTED )) && res+=" ${conflicted}$HOME${VCS_STATUS_NUM_CONFLICTED}"
     # +42 if have staged changes.
     (( VCS_STATUS_NUM_STAGED     )) && res+=" ${modified}+${VCS_STATUS_NUM_STAGED}"
     # !42 if have unstaged changes.
@@ -467,9 +467,9 @@
   typeset -g POWERLEVEL9K_VCS_MAX_INDEX_SIZE_DIRTY=-1
 
   # Don't show Git status in prompt for repositories whose workdir matches this pattern.
-  # For example, if set to '~', the Git repository at $HOME/.git will be ignored.
-  # Multiple patterns can be combined with '|': '~(|/foo)|/bar/baz/*'.
-  typeset -g POWERLEVEL9K_VCS_DISABLED_WORKDIR_PATTERN='~'
+  # For example, if set to '$HOME', the Git repository at $HOME/.git will be ignored.
+  # Multiple patterns can be combined with '|': '$HOME(|/foo)|/bar/baz/*'.
+  typeset -g POWERLEVEL9K_VCS_DISABLED_WORKDIR_PATTERN='$HOME'
 
   # Disable the default Git status formatting.
   typeset -g POWERLEVEL9K_VCS_DISABLE_GITSTATUS_FORMATTING=true
@@ -1161,7 +1161,7 @@
   #
   #   shell:  version is set by STACK_YAML
   #   local:  version is set by stack.yaml up the directory tree
-  #   global: version is set by the implicit global project (~/.stack/global-project/stack.yaml)
+  #   global: version is set by the implicit global project ($HOME/.stack/global-project/stack.yaml)
   typeset -g POWERLEVEL9K_HASKELL_STACK_SOURCES=(shell local)
   # If set to false, hide haskell version if it's the same as in the implicit global project.
   typeset -g POWERLEVEL9K_HASKELL_STACK_ALWAYS_SHOW=true

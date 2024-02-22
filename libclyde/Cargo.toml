@@ -6,6 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+gix = "0.58.0"
+iced = "0.12.0"
 serde = "1.0.197"
 serde_derive = "1.0.197"
 toml = "0.8.10"

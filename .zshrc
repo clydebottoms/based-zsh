@@ -68,6 +68,6 @@ eval "$(zoxide init zsh)"
 alias z=__zoxide_z
 alias cd=__zoxide_z
 
-6-7ms
+# 6-7ms
 autoload -Uz compinit; compinit -C
 (autoload -Uz compinit && compinit &)
